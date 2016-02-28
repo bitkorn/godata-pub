@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godata</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/angular-ui/build/angular-ui.css">
+    <link rel="stylesheet" href="lib/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="lib/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="lib/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="lib/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="lib/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="lib/angular-ui/build/angular-ui.js"></script>
+    <script type="text/javascript" src="lib/angular-ui/build/angular-ui-ieshiv.js"></script>
+    <script type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="lib/angular-ui-bootstrap/src/alert/alert.js"></script>
+    <script type="text/javascript" src="lib/angular-ui-bootstrap/src/modal/modal.js"></script>
+    <script type="text/javascript" src="app/index/controllers/index.js"></script>
+    <script type="text/javascript" src="app/common/services/alertKill.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+</head>
+<body ng-app="godataApp">
+
+<div class="container">
+    <div ng-include="'partials/topNav.html'"></div>
+    <div class="row">
+        <!--<div class="col-xs-12" ng-include="'partials/godata/_message.html'"></div>-->
+        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}
+        </uib-alert>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div ng-view></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

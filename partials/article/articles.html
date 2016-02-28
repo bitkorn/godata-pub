@@ -1,0 +1,69 @@
+<div class="well well-sm">
+    <form><!-- datt form Tag brauch der Reset Button -->
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="input-group">
+                    <span class="input-group-addon" id="article-no">No.</span>
+                    <!-- must be text if someone ssearch for 000 -->
+                    <input type="text" class="form-control" ng-model="article_no" aria-describedby="article-no" title="search for article number">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class=" input-group">
+                    <span class="input-group-addon" id="desc-string">desc</span>
+                    <input type="text" class="form-control" ng-model="desc_string" aria-describedby="desc-string" title="search for description short, long and technical">
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <select class="form-control" ng-options="option.name for option in articleTypes track by option.id" ng-model="selectedArticleType" title="select article type">
+                    <!--<option value="">---Please select---</option>-->
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-success pull-left click-default" ng-click="submitSearch()">los</button>
+                <!--<input type="reset" class="btn btn-default pull-right" value="reset">-->
+                <div class="input-group">
+                    <span class="input-group-addon" id="page-size">pagesize</span>
+                    <input type="text" class="form-control" ng-model="itemsPerPage" aria-describedby="page-size" ng-change="setPagesize(itemsPerPage)" title="set items per page">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>No</th>
+            <th>desc short</th>
+            <th>desc long</th>
+            <th>desc tec</th>
+            <th>type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="article in articles">
+            <td style="width: 40px;">{{article.id}}</td>
+            <td style="width: 60px;">{{article.articleNo}}</td>
+            <td>{{article.descShort}}</td>
+            <td>{{article.descLong}}</td>
+            <td>{{article.descTec}}</td>
+            <td>{{articleTypeArr[article.articleType]}}</td>
+            <td>
+                <a class="btn btn-xs btn-info" href="#!/article/{{article.id}}">View</a>
+                <a class="btn btn-xs btn-default" href="#!/articleEdit/{{article.id}}">Edit</a>
+                <a class="btn btn-xs btn-warning" ng-click="articleDelete(article.id)">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" items-per-page="itemsPerPage"></uib-pagination>
+<!--<pre>current Page: {{currentPage}}</pre>
+<pre>items Per Page: {{itemsPerPage}}</pre>
+<pre>total Items: {{totalItems}}</pre>-->
+
+<!--<pre>{{articleTypes}}</pre>
+<pre>selected: {{selectedArticleType.name}}</pre>-->

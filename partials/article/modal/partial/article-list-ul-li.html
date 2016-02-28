@@ -1,0 +1,26 @@
+<ul class="list-group lg-clear-margin" ng-controller="ArticleListModalUlInstanceCtrl">
+    <li class="list-group-item lgi-clear-padding" ng-repeat="articleListEntry in articleListEntries">
+        <!--{{articleListEntry}}-->
+        <div class="row lgi-alternate-padding">
+            <div class="col-sm-2">
+                <a href="#!/article/{{articleListEntry.articleId}}" target="_blank" title="open in new window">
+                    {{articleListEntry.articleData.articleNo}} ({{articleListEntry.articleId}}/{{articleListEntry.id}})
+                </a>
+            </div>
+            <div class="col-sm-2">{{articleListEntry.desc}}</div>
+            <div class="col-sm-2">{{articleListEntry.articleData.descShort}}</div>
+            <div class="col-sm-2">{{articleListEntry.articleData.descTec}}</div>
+            <div class="col-sm-1">{{articleListEntry.quantity}}</div>
+            <div class="col-sm-2">
+                <span class="badge">{{articleListEntry.countSubArticles}}</span>
+                <button class="btn btn-xs btn-info ng-hide" ng-click="openSubArticleListEntries(articleListEntry)" ng-show="articleListEntry.countSubArticles !== '0'">view list</button>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-xs btn-warning pull-right" ng-click="deleteFromList(articleListEntry)">Delete</a>
+            </div>
+        </div>
+        <!--{{showSub[articleListEntry.id]['show'] === true ? 'is true': 'is nich true'}}-->
+        <div ng-if="showSub[articleListEntry.id]['show'] === true" ng-include="articleListUlLiHtmlTemplate" ng-init="parentArticleListEntry = articleListEntry">
+        </div>
+    </li>
+</ul>

@@ -1,0 +1,36 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="2">Details for {{article.id}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Article No</td>
+            <td>{{article.articleNo}}</td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>{{article.articleType}}</td>
+        </tr>
+        <tr>
+            <td>Group</td>
+            <td>{{article.articleGroup}}</td>
+        </tr>
+        <tr>
+            <td>desc short</td>
+            <td>{{article.descShort}}</td>
+        </tr>
+        <tr>
+            <td>desc long</td>
+            <td>{{article.descLong}}</td>
+        </tr>
+        <tr>
+            <td>desc tec</td>
+            <td>{{article.descTec}}</td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-default" href="#!/articleEdit/{{article.id}}">Edit</a>
+</div>

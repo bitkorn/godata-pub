@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h3 class="modal-title">view article list {{parentArticle.articleNo}} (id: {{parentArticle.id}})</h3>
+</div>
+<div class="modal-body">
+    <!--{{articleListEntries}}-->
+    <ul class="list-group">
+        <li class="list-group-item lgi-clear-padding">
+            <div class="row lgi-alternate-padding">
+                <div class="col-sm-2"><b>No (a-id/l-id)</b></div>
+                <div class="col-sm-2"><b>desc list</b></div>
+                <div class="col-sm-2"><b>desc short article</b></div>
+                <div class="col-sm-2"><b>desc tec article</b></div>
+                <div class="col-sm-1"><b>quantity</b></div>
+                <div class="col-sm-2"><b>sub articles</b></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </li>
+        <li class="list-group-item lgi-clear-padding lgi-striped-color" ng-repeat="articleListEntry in articleListEntries">
+            <div class="row lgi-alternate-padding">
+                <div class="col-sm-2">
+                    <a href="#!/article/{{articleListEntry.articleId}}" target="_blank" title="open in new window">
+                        {{articleListEntry.articleData.articleNo}} ({{articleListEntry.articleId}}/{{articleListEntry.id}})
+                    </a>
+                </div>
+                <div class="col-sm-2">{{articleListEntry.desc}}</div>
+                <div class="col-sm-2">{{articleListEntry.articleData.descShort}}</div>
+                <div class="col-sm-2">{{articleListEntry.articleData.descTec}}</div>
+                <div class="col-sm-1">{{articleListEntry.quantity}}</div>
+                <div class="col-sm-2">
+                    <span class="badge">{{articleListEntry.countSubArticles}}</span>
+                    <button class="btn btn-xs btn-info ng-hide" ng-click="openSubArticleListEntries(articleListEntry)"
+                            ng-show="articleListEntry.countSubArticles !== '0'">view list
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <a class="btn btn-xs btn-warning pull-right" ng-click="deleteFromList(articleListEntry)">Delete</a>
+                </div>
+            </div>
+            <div ng-if="showSub[articleListEntry.id]['show'] === true" ng-include="articleListUlLiHtmlTemplate" ng-init="parentArticleListEntry = articleListEntry">
+                <!--<div ng-include="articleListUlLiHtmlTemplate" ng-init="parentArticleListEntry = articleListEntry"></div>-->
+            </div>
+        </li>
+    </ul>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="close()">close</button>
+    <button class="btn btn-default" type="button" ng-click="openSelectArticleForPartList()">add article to list</button>
+</div>
