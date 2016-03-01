@@ -44,11 +44,12 @@
 <div class="form-group">
     <label class="col-xs-2">Article Part-List</label>
     <div class="col-xs-1">
-        <span class="badge" id="articleListCount">{{article.articleListCount}}</span>
+        <span class="badge" id="articleListCount">{{articleListCount}}</span>
         <!--<input type="text" ng-model="article.articleListCount" id="articleListCount" class="form-control">-->
     </div>
     <div class="col-xs-2">
-        <button type="button" class="btn btn-info ng-hide" ng-click="openArticleList(article)" ng-show="article.articleListCount">view article part list</button>
+        <button type="button" class="btn btn-info ng-hide" ng-click="openArticleList(article)" ng-show="articleListCount">view article part list</button>
+        <div ng-hide="articleListCount">there is no part list</div>
     </div>
     <div class="col-xs-2">
         <button type="button" class="btn btn-default" ng-click="openSelectArticleForPartList()">add article to list</button>

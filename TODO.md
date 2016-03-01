@@ -5,9 +5,10 @@ some todo can obtain also for godata-rest
 - sidebar nav like magento
 
 ## article
-- html selects for: article-class, article-group
+- html selects for: article-class, article-group, unit, store
 - Article properties: 
 
 ## stock
--- edit stock in
+- edit stock in
+
 # further todo's

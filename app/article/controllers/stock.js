@@ -81,7 +81,7 @@ godataAppStockControllers.controller('StockInEnterCtrl', ['$scope', '$location',
                     function success(response) {
                         console.log("Success: " + JSON.stringify(response));
 //                            $location.path('/stockEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
-//                            $rootScope.message = {type: "success", message: "create successful"};
+                            $rootScope.alerts = [{type: "success", msg: "create successful"}];
                     },
                     function error(errorResponse) {
                         console.log("Error: " + JSON.stringify(errorResponse));

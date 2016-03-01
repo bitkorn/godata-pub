@@ -16,7 +16,7 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
             }
             Article.query({size: $scope.itemsPerPage, page: $scope.currentPage, articleNo: $scope.article_no, desc: $scope.desc_string, articleType: articleTypeId},
                     function success(response) {
-//                    console.log("Success: " + JSON.stringify(response));
+                    console.log("Success: " + JSON.stringify(response));
                         $scope.articles = response.data;
                         /* Pagination */
                         $scope.totalItems = parseInt(response.count);
@@ -73,7 +73,7 @@ godataAppArticleControllers.controller('ArticleCtrl', ['$scope', '$routeParams',
         Article.get({id: articleId},
                 function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
-                    $scope.article = response;
+                    $scope.article = response.data;
                 },
                 function error(errorResponse) {
                     console.log("Error: " + JSON.stringify(errorResponse));
@@ -85,7 +85,7 @@ godataAppArticleControllers.controller('ArticleAddCtrl', ['$scope', '$location',
         Article.get({id: 0},
                 function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
-                    $scope.article = response;
+                    $scope.article = response.data;
                 },
                 function error(errorResponse) {
                     console.log("Error: " + JSON.stringify(errorResponse));
@@ -97,7 +97,7 @@ godataAppArticleControllers.controller('ArticleAddCtrl', ['$scope', '$location',
                 console.log("articleAdd: " + JSON.stringify($scope.article));
                 Article.create($scope.article,
                         function success(response) {
-//                            console.log("Success: " + JSON.stringify(response));
+                            //console.log("Success add ID: " + JSON.stringify(response));
                             $location.path('/articleEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
 //                            $rootScope.message = {type: "success", message: "create successful"};
                         },
@@ -113,8 +113,9 @@ godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routePara
         var articleId = $routeParams.id;
         Article.get({id: articleId},
                 function success(response) {
-//                    console.log("Success: " + JSON.stringify(response));
-                    $scope.article = response;
+                    console.log("Success: " + JSON.stringify(response));
+                    $scope.article = response.data;
+                    $scope.articleListCount = response.articleListCount;
                 },
                 function error(errorResponse) {
                     console.log("Error: " + JSON.stringify(errorResponse));
