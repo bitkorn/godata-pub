@@ -1,0 +1,1 @@
+stock belongs to root article.html

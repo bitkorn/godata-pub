@@ -31,8 +31,8 @@ godataAppArticle.config(['$routeProvider', '$locationProvider', function ($route
     }).when('/articleEdit/:id', {
         templateUrl: 'partials/article/article-edit.html',
         controller: 'ArticleEditCtrl'
-    }).when('/stockIn', {
-        templateUrl: 'partials/stock/stock-in.html',
+    }).when('/stockIns', {
+        templateUrl: 'partials/stock/stock-ins.html',
         controller: 'StockInCtrl'
     }).when('/stockInEnter', {
         templateUrl: 'partials/stock/stock-in-enter.html',
