@@ -52,7 +52,7 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
             if (confirm('You will delete article ' + id)) {
                 Article.delete({id: id},
                         function success(response) {
-                            console.log("Success: " + JSON.stringify(response));
+                            console.log("Success delete: " + JSON.stringify(response));
                             if (response['result'] === 1) {
                                 executeQuery();
                             }
@@ -231,7 +231,7 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
             ArticleList.get({id: parentArticle.id}, // 
                     function success(response) {
 //                        console.log("Success: " + JSON.stringify(response));
-                        $scope.articleListEntries = response;
+                        $scope.articleListEntries = response.data;
                     },
                     function error(errorResponse) {
                         console.log("Error: " + JSON.stringify(errorResponse));
@@ -258,7 +258,7 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
                 ArticleList.delete({id: articleListEntry.id}, // 
                         function success(response) {
 //                        console.log("Success: " + JSON.stringify(response));
-                            if (response.result === articleListEntry.id) {
+                            if (response.result === 1) {
                                 $route.reload();
 //                            $rootScope.message = {type: "success", message: "delete Article-Part-List-Entry-Entity successful"}; // funzt hier NICHT
                             } else {
@@ -284,7 +284,7 @@ godataAppArticleControllers.controller('ArticleListModalUlInstanceCtrl', ['$scop
             ArticleList.get({id: $scope.parentArticleListEntry.articleId},
                     function success(response) {
 //                        console.log("Success: " + JSON.stringify(response));
-                        $scope.articleListEntries = response;
+                        $scope.articleListEntries = response.data;
                     },
                     function error(errorResponse) {
                         console.log("Error: " + JSON.stringify(errorResponse));

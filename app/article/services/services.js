@@ -20,7 +20,7 @@ godataAppArticleServices.factory('Article', ['$resource', function ($resource) {
     }]);
 godataAppArticleServices.factory('ArticleList', ['$resource', function ($resource) {
         return $resource('http://godatarest.local/article-list', {}, {
-            get: {method: 'GET', cache: false, isArray: true}, // get list from one article
+            get: {method: 'GET', cache: false, isArray: false}, // get list from one article
 //            query: {method: 'GET', cache: false, isArray: false},
             create: {method: 'POST', cache: false, isArray: false}, // create one article list entry
             update: {method: 'PUT', cache: false, isArray: false},
