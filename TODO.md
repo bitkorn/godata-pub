@@ -1,5 +1,5 @@
 # only the next todo's
-some todo can obtain also for godata-rest
+some todo can also obtain for godata-rest
 ## common
 - multilang
 - sidebar nav like magento
