@@ -25,7 +25,7 @@ godataAppStockControllers.controller('StockInCtrl', ['$scope', '$location', 'Sto
                     console.log("Error: " + JSON.stringify(errorResponse));
                 });
         };
-        executeQuery(); // ever call for no empty site
+        executeQuery(); // always call for no empty site
 
 //        $scope.setPage = function (pageNo) {
 //            $scope.currentPage = pageNo;
@@ -80,7 +80,7 @@ godataAppStockControllers.controller('StockInEnterCtrl', ['$scope', '$location',
                 StockIn.create($scope.stock,
                     function success(response) {
                         console.log("Success: " + JSON.stringify(response));
-//                            $location.path('/stockEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
+//                            $location.path('/stockEdit/' + response['id']); // comment out for testing
                             $rootScope.alerts = [{type: "success", msg: "create successful"}];
                     },
                     function error(errorResponse) {
