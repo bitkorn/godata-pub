@@ -1,7 +1,7 @@
 /**
  * This is the main App app.js
  * it runs in /index.html
- * Here are things like login or show the company logo
+ * Here are things like 'login' or 'show the company logo'
  */
 'use strict';
 

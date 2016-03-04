@@ -1,7 +1,7 @@
 /**
  * This is the Article App app.js
  * it runs in /article.html
- * Here you can view and edit articles and his part lists
+ * Here you can view and edit articles and their part lists
  */
 'use strict';
 

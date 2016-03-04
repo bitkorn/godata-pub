@@ -28,7 +28,7 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
                         console.log("Error: " + JSON.stringify(errorResponse));
                     });
         };
-        executeQuery(); // ever call for no empty site
+        executeQuery(); // always call for no empty site
 
 //        $scope.setPage = function (pageNo) {
 //            $scope.currentPage = pageNo;
@@ -81,7 +81,7 @@ godataAppArticleControllers.controller('ArticleCtrl', ['$scope', '$routeParams',
     }]);
 godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location', 'Article', '$rootScope',
     function ($scope, $location, Article, $rootScope) { // SAVE id
-        // init at first an empty article, otherwise $scope.article is empty
+        // at first init an empty article, otherwise $scope.article is empty
         Article.get({id: 0},
                 function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
@@ -98,8 +98,8 @@ godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location',
                 Article.create($scope.article,
                         function success(response) {
                             //console.log("Success add ID: " + JSON.stringify(response));
-                            $location.path('/articleEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
-//                            $rootScope.message = {type: "success", message: "create successful"};
+                            $location.path('/articleEdit/' + response['id']); // comment out for testing
+//                            $rootScope.message = {type: "success", message: "created successful"};
                         },
                         function error(errorResponse) {
                             console.log("Error: " + JSON.stringify(errorResponse));
@@ -124,9 +124,9 @@ godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routePara
 //            alert('articleEdit: ' + JSON.stringify($scope.article));
             Article.update({id: $scope.article.id}, $scope.article,
                     function success(response) {
-                        $rootScope.alerts = [{type: 'success', msg: 'you have saved :)'}];
+                        $rootScope.alerts = [{type: 'success', msg: 'saved :)'}];
 //                        console.log("Success: " + JSON.stringify(response));
-//                            $location.path('/articleEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
+//                            $location.path('/articleEdit/' + response['id']); // comment out for testing
                     },
                     function error(errorResponse) {
                         console.log("Error: " + JSON.stringify(errorResponse));
@@ -225,7 +225,7 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
     function ($scope, $rootScope, ArticleList, $log, $uibModalInstance, parentArticle, $route) { // GET
 //        console.log('articleId: ' + parentArticle);
         $scope.articleListUlLiHtmlTemplate = 'partials/article/modal/partial/article-list-ul-li.html';
-        $scope.parentArticle = parentArticle; // put it to the scope to show in title
+        $scope.parentArticle = parentArticle; // put it to the scope to show in the title
         $scope.showSub = new Array();
         var executeQuery = function () {
             ArticleList.get({id: parentArticle.id}, // 
@@ -239,7 +239,7 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
         };
         executeQuery();
 
-        $scope.openSubArticleListEntries = function (articleListEntry) { // inherited fromArticleListModalUlInstanceCtrl
+        $scope.openSubArticleListEntries = function (articleListEntry) { // inherited from ArticleListModalUlInstanceCtrl
 //            console.log('articleListEntry ID: ' + articleListEntry.id);
             if ($scope.showSub[articleListEntry.id] && $scope.showSub[articleListEntry.id]['show']) {
                 $scope.showSub[articleListEntry.id]['show'] = false;
@@ -260,7 +260,7 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
 //                        console.log("Success: " + JSON.stringify(response));
                             if (response.result === 1) {
                                 $route.reload();
-//                            $rootScope.message = {type: "success", message: "delete Article-Part-List-Entry-Entity successful"}; // funzt hier NICHT
+//                            $rootScope.message = {type: "success", message: "deleted Article-Part-List-Entry-Entity successfully"}; // funzt hier NICHT
                             } else {
                                 alert('wat war das?');
                             }
@@ -279,7 +279,7 @@ godataAppArticleControllers.controller('ArticleListModalUlInstanceCtrl', ['$scop
     function ($scope, ArticleList) { // GET
 //        $scope.parentArticleId = $scope.parentArticleListEntry.articleId; // from ng-init
 //        console.log('$scope.parentArticleListEntry.articleId: ' + $scope.parentArticleListEntry.articleId);
-        $scope.articleListEntries = null; // oh oh ...very important (if they cant find, it look up to rootScope)
+        $scope.articleListEntries = null; // oh oh ...very important (if it isn't found, angular looks up to rootScope)
         var executeQuery = function () {
             ArticleList.get({id: $scope.parentArticleListEntry.articleId},
                     function success(response) {
@@ -290,7 +290,7 @@ godataAppArticleControllers.controller('ArticleListModalUlInstanceCtrl', ['$scop
                         console.log("Error: " + JSON.stringify(errorResponse));
                     });
         };
-        executeQuery(); // ever call for no empty site
+        executeQuery(); // always call for no empty site
     }]);
 godataAppArticleControllers.controller('ArticleSelectModalInstanceCtrl', ['$scope', 'Article', '$log', '$cookies', '$uibModalInstance', 'ArticleTypes',
     function articles($scope, Article, $log, $cookies, $uibModalInstance) { // GET
@@ -321,7 +321,7 @@ godataAppArticleControllers.controller('ArticleSelectModalInstanceCtrl', ['$scop
                         console.log("Error: " + JSON.stringify(errorResponse));
                     });
         };
-        executeQuery(); // ever call for no empty site
+        executeQuery(); // always call for no empty site
 
         // modal
         $scope.ok = function () {
