@@ -11,7 +11,13 @@ godataAppStockControllers.controller('StockInsCtrl', ['$scope', '$location', 'St
         var executeQuery = function () {
 //            var day = $scope.entry_time_from.getDate();
 //            alert(day);
-            StockIn.query({size: $scope.itemsPerPage, page: $scope.currentPage, articleNo: $scope.article_no, entryTimeFrom: $scope.entry_time_from, entryTimeTo: $scope.entry_time_to},
+            StockIn.query({
+                    size: $scope.itemsPerPage,
+                    page: $scope.currentPage,
+                    articleNo: $scope.article_no,
+                    entryTimeFrom: $scope.entry_time_from,
+                    entryTimeTo: $scope.entry_time_to
+                },
                 function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
                     $scope.stockins = response.data;
@@ -75,13 +81,12 @@ godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', '
             if ($scope.stock.articleNo === '0') {
                 alert('You must enter a valid article no');
             } else {
-                $scope.stock.articleId = $scope.stock.articleNo; // only for testing
-                console.log("stockInNew: " + JSON.stringify($scope.stock));
+                //console.log("stockInNew: " + JSON.stringify($scope.stock));
                 StockIn.create($scope.stock,
                     function success(response) {
-                        console.log("Success: " + JSON.stringify(response));
-//                            $location.path('/stockEdit/' + response['id']); // comment out for testing
-                            $rootScope.alerts = [{type: "success", msg: "create successful"}];
+                        //console.log("Success: " + JSON.stringify(response));
+                        $location.path('/stockEdit/' + response['id']); // comment out for testing
+                        $rootScope.alerts = [{type: "success", msg: "create successful"}];
                     },
                     function error(errorResponse) {
                         console.log("Error: " + JSON.stringify(errorResponse));
