@@ -45,16 +45,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="stockin in stockins">
-            <td style="width: 80px;">{{stockin.id}}</td>
-            <td style="width: 80px;">{{stockin.articleId}}</td>
-            <td style="width: 80px;">{{stockin.storeId}}</td>
-            <td>{{stockin.storePlace}}</td>
-            <td>{{stockin.charge}}</td>
-            <td>{{stockin.quantity}}</td>
+        <tr ng-repeat="stockIn in stockIns">
+            <td style="width: 80px;">{{stockIn.id}}</td>
+            <td style="width: 80px;">{{stockIn.articleId}}</td>
+            <td style="width: 80px;">{{stockIn.storeId}}</td>
+            <td>{{stockIn.storePlace}}</td>
+            <td>{{stockIn.charge}}</td>
+            <td>{{stockIn.quantity}}</td>
             <td>
-<!--                <a class="btn btn-xs btn-default" href="#!/article/{{stockin.id}}">View</a>
-                <a class="btn btn-xs btn-warning" ng-click="articleDelete(stockin.id)">Delete</a>-->
+                <a class="btn btn-xs btn-info" href="#!/article/{{stockIn.articleId}}">view article</a>
+                <a class="btn btn-xs btn-info" href="#!/stockIn/{{stockIn.id}}">view stock-in</a>
+                <a class="btn btn-xs btn-default" href="#!/stockInEdit/{{stockIn.id}}">edit stock-in</a>
             </td>
         </tr>
     </tbody>

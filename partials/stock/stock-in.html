@@ -1,0 +1,42 @@
+<h3>view Stock In</h3>
+<pre>{{stockIn}}</pre>
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="2">Details for {{stockIn.id}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>articleId</td>
+        <td>{{stockIn.articleId}}</td>
+    </tr>
+    <tr>
+        <td>storeId</td>
+        <td>{{stockIn.storeId}}</td>
+    </tr>
+    <tr>
+        <td>storePlace</td>
+        <td>{{stockIn.storePlace}}</td>
+    </tr>
+    <tr>
+        <td>charge</td>
+        <td>{{stockIn.charge}}</td>
+    </tr>
+    <tr>
+        <td>quantity</td>
+        <td>{{stockIn.quantity}}</td>
+    </tr>
+    <tr>
+        <td>unit</td>
+        <td>{{stockIn.unit}}</td>
+    </tr>
+    <tr>
+        <td>entryTime</td>
+        <td>{{stockIn.entryTime}}</td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-default" href="#!/stockInEdit/{{stockIn.id}}">edit</a>
+</div>

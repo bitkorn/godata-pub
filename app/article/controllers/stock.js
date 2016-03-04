@@ -20,7 +20,7 @@ godataAppStockControllers.controller('StockInsCtrl', ['$scope', '$location', 'St
                 },
                 function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
-                    $scope.stockins = response.data;
+                    $scope.stockIns = response.data;
                     /* Pagination */
                     $scope.totalItems = parseInt(response.count);
                     $scope.itemsPerPage = parseInt(response.size);
@@ -68,7 +68,7 @@ godataAppStockControllers.controller('StockInsCtrl', ['$scope', '$location', 'St
     }]);
 godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
     function ($scope, $location, StockIn, $rootScope, $log, $uibModal) { // POST
-        $scope.stock = {
+        $scope.stockIn = {
             articleId: '',
             articleNo: '',
             storeId: '',
@@ -77,15 +77,15 @@ godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', '
             quantity: "",
             unit: ""
         };
-        $scope.stockEnter = function () {
-            if ($scope.stock.articleNo === '0') {
+        $scope.stockNew = function () {
+            if ($scope.stockIn.articleNo === '0') {
                 alert('You must enter a valid article no');
             } else {
-                //console.log("stockInNew: " + JSON.stringify($scope.stock));
-                StockIn.create($scope.stock,
+                //console.log("stockInNew: " + JSON.stringify($scope.stockIn));
+                StockIn.create($scope.stockIn,
                     function success(response) {
                         //console.log("Success: " + JSON.stringify(response));
-                        $location.path('/stockEdit/' + response['id']); // comment out for testing
+                        $location.path('/stockInEdit/' + response['id']); // comment out for testing
                         $rootScope.alerts = [{type: "success", msg: "create successful"}];
                     },
                     function error(errorResponse) {
@@ -108,53 +108,56 @@ godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', '
              * result (selectedItem) parameter comes from uibModal.close(result)
              */
             modalInstance.result.then(function (selectedItem) {
-                $scope.stock.articleNo = selectedItem.articleNo;
-                $scope.stock.articleId = selectedItem.id;
-                console.log(" stock with choosed article: " + JSON.stringify($scope.stock));
+                $scope.stockIn.articleNo = selectedItem.articleNo;
+                $scope.stockIn.articleId = selectedItem.id;
+                console.log(" stock with choosed article: " + JSON.stringify($scope.stockIn));
             }, function () {
 //                $log.info('Modal dismissed at: ' + new Date());
             });
         };
     }]);
-godataAppStockControllers.controller('StockInEditCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
-    function ($scope, $location, StockIn, $rootScope, $log, $uibModal) { // POST
-        /* rule: unable to edit articleNo from one stock-in entry  */
-        $scope.stockEdit = function () {
-            if ($scope.stock.articleNo === '0') {
-                alert('You must enter a valid article no');
-            } else {
-                $scope.stock.articleId = $scope.stock.articleNo; // only for testing
-                console.log("stockEnter: " + JSON.stringify($scope.stock));
-                StockIn.create($scope.stock,
-                    function success(response) {
-                        console.log("Success: " + JSON.stringify(response));
-//                            $location.path('/stockEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
-                        $rootScope.alerts = [{type: "success", msg: "create successful"}];
-                    },
-                    function error(errorResponse) {
-                        console.log("Error: " + JSON.stringify(errorResponse));
-                    }
-                );
+godataAppStockControllers.controller('StockInCtrl', ['$scope', '$routeParams', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
+    function ($scope, $routeParams, $location, StockIn, $rootScope, $log, $uibModal) { // GET
+        /* show one stock-in entry  */
+        // TODO: REST API -> join article
+        var stockInId = $routeParams.id;
+        StockIn.query({id:stockInId},
+            function success(response) {
+                $scope.stockIn = response.data;
+                console.log("Success: " + JSON.stringify(response));
+            },
+            function error(errorResponse) {
+                console.log("Error: " + JSON.stringify(errorResponse));
             }
-        };
+        );
 
-        $scope.openSelectArticle = function () {
+    }]);
 
-            var modalInstance = $uibModal.open({
-                animation: false,
-                templateUrl: 'partials/article/modal/article-select.html',
-                controller: 'ArticleSelectModalInstanceCtrl',
-                size: 'lg'
-            });
-
-            /*
-             * result (selectedItem) parameter comes from uibModal.close(result)
-             */
-            modalInstance.result.then(function (selectedItem) {
-                $scope.stock.articleNo = selectedItem.articleNo;
-                $scope.stock.articleId = selectedItem.articleId;
-            }, function () {
-//                $log.info('Modal dismissed at: ' + new Date());
-            });
+godataAppStockControllers.controller('StockInEditCtrl', ['$scope', '$routeParams', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
+    function ($scope, $routeParams, $location, StockIn, $rootScope, $log, $uibModal) { // POST
+        /* rule: unable to edit articleNo from one stock-in entry  */
+        // TODO: REST API -> join article
+        var stockInId = $routeParams.id;
+        StockIn.query({id:stockInId},
+            function success(response) {
+                $scope.stockIn = response.data;
+                console.log("Success: " + JSON.stringify(response));
+            },
+            function error(errorResponse) {
+                console.log("Error: " + JSON.stringify(errorResponse));
+            }
+        );
+        $scope.stockEdit = function () {
+            console.log("stockEdit: " + JSON.stringify($scope.stockIn));
+            StockIn.update({id:$scope.stockIn.id}, $scope.stockIn,
+                function success(response) {
+                    console.log("Success: " + JSON.stringify(response));
+                    $rootScope.alerts = [{type: "success", msg: "edited successful"}];
+                },
+                function error(errorResponse) {
+                    console.log("Error: " + JSON.stringify(errorResponse));
+                    $rootScope.alerts = [{type: "warning", msg: "there are some errors during editing stock-in"}];
+                }
+            );
         };
     }]);
