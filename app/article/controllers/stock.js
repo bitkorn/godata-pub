@@ -1,7 +1,7 @@
 'use strict';
 
 var godataAppStockControllers = angular.module('godataAppStockControllers', []);
-godataAppStockControllers.controller('StockInCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$cookies', 'AlertKill',
+godataAppStockControllers.controller('StockInsCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$cookies', 'AlertKill',
     function ($scope, $location, StockIn, $rootScope, $log, $cookies) { // GET
 
         $scope.itemsPerPage = $cookies.get("pagesize");
@@ -60,7 +60,7 @@ godataAppStockControllers.controller('StockInCtrl', ['$scope', '$location', 'Sto
             $cookies.put('pagesize', pagesize);
         };
     }]);
-godataAppStockControllers.controller('StockInEnterCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
+godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
     function ($scope, $location, StockIn, $rootScope, $log, $uibModal) { // POST
         $scope.stock = {
             articleId: '',
@@ -76,12 +76,55 @@ godataAppStockControllers.controller('StockInEnterCtrl', ['$scope', '$location',
                 alert('You must enter a valid article no');
             } else {
                 $scope.stock.articleId = $scope.stock.articleNo; // only for testing
-                console.log("stockEnter: " + JSON.stringify($scope.stock));
+                console.log("stockInNew: " + JSON.stringify($scope.stock));
                 StockIn.create($scope.stock,
                     function success(response) {
                         console.log("Success: " + JSON.stringify(response));
 //                            $location.path('/stockEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
                             $rootScope.alerts = [{type: "success", msg: "create successful"}];
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    }
+                );
+            }
+        };
+
+        $scope.openSelectArticle = function () {
+
+            var modalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'partials/article/modal/article-select.html',
+                controller: 'ArticleSelectModalInstanceCtrl',
+                size: 'lg'
+            });
+
+            /*
+             * result (selectedItem) parameter comes from uibModal.close(result)
+             */
+            modalInstance.result.then(function (selectedItem) {
+                $scope.stock.articleNo = selectedItem.articleNo;
+                $scope.stock.articleId = selectedItem.id;
+                console.log(" stock with choosed article: " + JSON.stringify($scope.stock));
+            }, function () {
+//                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+    }]);
+godataAppStockControllers.controller('StockInEditCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
+    function ($scope, $location, StockIn, $rootScope, $log, $uibModal) { // POST
+        /* rule: unable to edit articleNo from one stock-in entry  */
+        $scope.stockEdit = function () {
+            if ($scope.stock.articleNo === '0') {
+                alert('You must enter a valid article no');
+            } else {
+                $scope.stock.articleId = $scope.stock.articleNo; // only for testing
+                console.log("stockEnter: " + JSON.stringify($scope.stock));
+                StockIn.create($scope.stock,
+                    function success(response) {
+                        console.log("Success: " + JSON.stringify(response));
+//                            $location.path('/stockEdit/' + response['id']); // zum Massen hinzuadden (TEST) auskommentieren
+                        $rootScope.alerts = [{type: "success", msg: "create successful"}];
                     },
                     function error(errorResponse) {
                         console.log("Error: " + JSON.stringify(errorResponse));

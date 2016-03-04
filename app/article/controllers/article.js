@@ -79,7 +79,7 @@ godataAppArticleControllers.controller('ArticleCtrl', ['$scope', '$routeParams',
                     console.log("Error: " + JSON.stringify(errorResponse));
                 });
     }]);
-godataAppArticleControllers.controller('ArticleAddCtrl', ['$scope', '$location', 'Article', '$rootScope',
+godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location', 'Article', '$rootScope',
     function ($scope, $location, Article, $rootScope) { // SAVE id
         // init at first an empty article, otherwise $scope.article is empty
         Article.get({id: 0},

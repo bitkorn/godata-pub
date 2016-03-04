@@ -26,17 +26,20 @@ godataAppArticle.config(['$routeProvider', '$locationProvider', function ($route
         templateUrl: 'partials/article/article.html',
         controller: 'ArticleCtrl'
     }).when('/articleNew', {
-        templateUrl: 'partials/article/article-add.html',
-        controller: 'ArticleAddCtrl'
+        templateUrl: 'partials/article/article-new.html',
+        controller: 'ArticleNewCtrl'
     }).when('/articleEdit/:id', {
         templateUrl: 'partials/article/article-edit.html',
         controller: 'ArticleEditCtrl'
     }).when('/stockIns', {
         templateUrl: 'partials/stock/stock-ins.html',
-        controller: 'StockInCtrl'
-    }).when('/stockInEnter', {
-        templateUrl: 'partials/stock/stock-in-enter.html',
-        controller: 'StockInEnterCtrl'
+        controller: 'StockInsCtrl'
+    }).when('/stockInNew', {
+        templateUrl: 'partials/stock/stock-in-new.html',
+        controller: 'StockInNewCtrl'
+    }).when('/stockInEdit', {
+        templateUrl: 'partials/stock/stock-in-edit.html',
+        controller: 'StockInEditCtrl'
     });
     $locationProvider.html5Mode(false).hashPrefix('!');
 
