@@ -36,7 +36,7 @@
     <thead>
         <tr>
             <th>S. ID</th>
-            <th>A. ID</th>
+            <th>A. no.</th>
             <th>Store ID</th>
             <th>Store Place</th>
             <th>Charge</th>
@@ -47,7 +47,7 @@
     <tbody>
         <tr ng-repeat="stockIn in stockIns">
             <td style="width: 80px;">{{stockIn.id}}</td>
-            <td style="width: 80px;">{{stockIn.articleId}}</td>
+            <td style="width: 80px;">{{stockIn.articleData.articleNo}}</td>
             <td style="width: 80px;">{{stockIn.storeId}}</td>
             <td>{{stockIn.storePlace}}</td>
             <td>{{stockIn.charge}}</td>
