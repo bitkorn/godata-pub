@@ -8,13 +8,17 @@
 <div class="form-group">
     <label for="articleType" class="col-xs-2">Type</label>
     <div class="col-xs-6">
-        <input type="text" ng-model="article.articleType" id="articleType" class="form-control" placeholder="Type here"/>
+        <!--<input type="text" ng-model="article.articleType" id="articleType" class="form-control" placeholder="Type here"/>-->
+        <select id="articleType" class="form-control" ng-options="option.name for option in articleTypes track by option.id" ng-model="article.articleType" title="select article type">
+        </select>
     </div>
 </div>
 <div class="form-group">
     <label for="articleGroup" class="col-xs-2">Group</label>
     <div class="col-xs-6">
-        <input type="text" ng-model="article.articleGroup" id="articleGroup" class="form-control" placeholder="Group here"/>
+        <!--<input type="text" ng-model="article.articleGroup" id="articleGroup" class="form-control" placeholder="Group here"/>-->
+        <select id="articleGroup" class="form-control" ng-options="option.name for option in articleGroups track by option.id" ng-model="article.articleGroup" title="select article group">
+        </select>
     </div>
 </div>
 <div class="form-group">

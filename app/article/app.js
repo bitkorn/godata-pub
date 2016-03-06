@@ -54,3 +54,4 @@ godataAppArticle.run(function ($rootScope, $cookies) {
         $cookies.put("pagesize", 6); // initial pagesize
     }
 });
+godataAppArticle.constant('restDomain', 'http://godatarest.local');
