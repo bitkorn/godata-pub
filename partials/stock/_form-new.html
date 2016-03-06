@@ -1,7 +1,7 @@
 <div class="form-group">
     <label for="articleNo" class="col-xs-2">Article No</label>
     <div class="col-xs-4">
-        <input type="text" ng-model="stockIn.articleNo" id="articleNo" class="form-control" placeholder="Article No here"/>
+        <input type="text" ng-model="stockIn.articleNo" id="articleNo" class="form-control" placeholder="Article No here" readonly/>
         <input type="hidden" ng-model="stockIn.articleId" id="articleId">
     </div>
     <div class="col-xs-2">
@@ -13,11 +13,17 @@
     <div class="col-xs-6">
         <input type="text" ng-model="stockIn.storeId" id="storeId" class="form-control" placeholder="store-id here"/>
     </div>
+    <div class="col-xs-4" ng-show="messages.storeId">
+        <p class="bg-danger" ng-repeat="message in messages.storeId">{{message}}</p>
+    </div>
 </div>
 <div class="form-group">
     <label for="storePlace" class="col-xs-2">Store Place</label>
     <div class="col-xs-6">
         <input type="text" ng-model="stockIn.storePlace" id="storePlace" class="form-control" placeholder="store-place here"/>
+    </div>
+    <div class="col-xs-4" ng-show="messages.storePlace">
+        <p class="bg-danger" ng-repeat="message in messages.storePlace">{{message}}</p>
     </div>
 </div>
 <div class="form-group">
@@ -25,17 +31,26 @@
     <div class="col-xs-6">
         <input type="text" ng-model="stockIn.charge" id="charge" class="form-control" placeholder="charge here"/>
     </div>
+    <div class="col-xs-4" ng-show="messages.charge">
+        <p class="bg-danger" ng-repeat="message in messages.charge">{{message}}</p>
+    </div>
 </div>
 <div class="form-group">
     <label for="quantity" class="col-xs-2">Quantity</label>
     <div class="col-xs-6">
         <input type="text" ng-model="stockIn.quantity" id="quantity" class="form-control" placeholder="quantity here"/>
     </div>
+    <div class="col-xs-4" ng-show="messages.quantity">
+        <p class="bg-danger" ng-repeat="message in messages.quantity">{{message}}</p>
+    </div>
 </div>
 <div class="form-group">
     <label for="unit" class="col-xs-2">Unit</label>
     <div class="col-xs-6">
         <input type="text" ng-model="stockIn.unit" id="unit" class="form-control" placeholder="unit here"/>
+    </div>
+    <div class="col-xs-4" ng-show="messages.unit">
+        <p class="bg-danger" ng-repeat="message in messages.unit">{{message}}</p>
     </div>
 </div>
 <div class="form-group">

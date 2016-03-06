@@ -85,11 +85,13 @@ godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', '
                 StockIn.create($scope.stockIn,
                     function success(response) {
                         //console.log("Success: " + JSON.stringify(response));
-                        $location.path('/stockInEdit/' + response['id']); // comment out for testing
+                        //$location.path('/stockInEdit/' + response['id']); // comment out for testing
                         $rootScope.alerts = [{type: "success", msg: "create successful"}];
                     },
                     function error(errorResponse) {
-                        console.log("Error: " + JSON.stringify(errorResponse));
+                        $scope.messages = errorResponse.data.messages;
+                        $rootScope.alerts = [{type: "danger", msg: "create failure"}];
+                        //console.log("Error: " + JSON.stringify(errorResponse));
                     }
                 );
             }
