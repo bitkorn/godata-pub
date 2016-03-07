@@ -1,9 +1,8 @@
 'use strict';
 
 var godataAppArticleControllers = angular.module('godataAppArticleControllers', []);
-godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', 'Article', '$rootScope', '$log', '$cookies', 'AlertKill', 'ArticleTypes',
+godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', 'Article', '$rootScope', '$log', '$cookies', 'ArticleTypes', 'AlertKill',
     function ($scope, $location, Article, $rootScope, $log, $cookies) { // GET
-
         $scope.itemsPerPage = parseInt($cookies.get("pagesize"));
         var articleTypeId = 0;
 
@@ -29,6 +28,7 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
                     $scope.itemsPerPage = parseInt(response.size);
                     $scope.currentPage = parseInt(response.page);
 //                    $rootScope.alerts = [{type: 'success', msg: 'jou toll'}];
+                    $rootScope.$broadcast('articleLoaded'); // some services look at this
                 },
                 function error(errorResponse) {
                     console.log("Error: " + JSON.stringify(errorResponse));
@@ -92,6 +92,7 @@ godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location',
             function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
                 $scope.article = response.data;
+                $rootScope.$broadcast('articleLoaded'); // some services look at this
             },
             function error(errorResponse) {
                 console.log("Error: " + JSON.stringify(errorResponse));
@@ -122,18 +123,19 @@ godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location',
     }]);
 godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routeParams', 'Article', 'ArticleList', '$rootScope',
     '$uibModal', '$route', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses', 'AlertKill',
-    function ($scope, $routeParams, Article, ArticleList, $rootScope, $uibModal, $route, ArticleTypes, ArticleGroups, ArticleClasses) { // UPDATE id
+    function ($scope, $routeParams, Article, ArticleList, $rootScope, $uibModal, $route) { // UPDATE id
         var articleId = $routeParams.id;
         Article.get({id: articleId},
             function success(response) {
                 //console.log("Success: " + JSON.stringify(response));
                 $scope.article = response.data;
                 $scope.articleListCount = response.articleListCount;
-                updateSelectsPreselection();
+                $rootScope.$broadcast('articleLoaded'); // some services look at this
             },
             function error(errorResponse) {
                 console.log("Error: " + JSON.stringify(errorResponse));
             });
+
         $scope.articleEdit = function () {
             if ($scope.article.articleType.id) {
                 $scope.article.articleType = $scope.article.articleType.id;
@@ -146,26 +148,26 @@ godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routePara
                     $rootScope.alerts = [{type: 'success', msg: 'saved :)'}];
                     //console.log("Success: " + JSON.stringify(response));
                     //$location.path('/articleEdit/' + response['id']); // comment out for testing
-                    updateSelectsPreselection();
+                    $rootScope.$broadcast('articleLoaded'); // some services look at this
                 },
                 function error(errorResponse) {
                     console.log("Error: " + JSON.stringify(errorResponse));
                 });
         };
 
-        var updateSelectsPreselection = function () {
+        $rootScope.$on('articleTypesLoaded', function () {
             $scope.article.articleType = {
                 "id": $scope.article.articleType,
                 "name": $rootScope.articleTypes[$scope.article.articleType]
             };
+        });
+
+        $rootScope.$on('articleGroupsLoaded', function () {
             $scope.article.articleGroup = {
                 "id": $scope.article.articleGroup,
                 "name": $rootScope.articleGroups[$scope.article.articleGroup]
             };
-        }
-        if ($scope.article && $rootScope.articleTypes && $rootScope.articleGroups) {
-            //updateSelectsPreselection();
-        }
+        });
 
         $scope.openArticleList = function (article) {
             var modalInstance = $uibModal.open({

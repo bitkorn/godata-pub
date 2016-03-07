@@ -58,53 +58,52 @@ godataAppArticleServices.service('ArticleTypes', ['$rootScope', 'ArticleType', f
     /*
      * Article types for a HTML Select and display name with id
      */
-    ArticleType.query(
-        function success(response) {
-            //console.log('response: ' + response);
-            $rootScope.articleTypes = response;
-            $rootScope.articleTypes.push({"id": "0", "name": "-- none --"}); // support reset select :)
-        },
-        function error(errorResponse) {
-            console.log("Error: " + JSON.stringify(errorResponse));
-        });
+    $rootScope.$on('articleLoaded', function () {
+        ArticleType.query(
+            function success(response) {
+                //console.log('ArticleTypes: ' + JSON.stringify(response));
+                $rootScope.articleTypes = response;
+                $rootScope.articleTypes.push({"id": "0", "name": "-- none --"}); // support reset select :)
+                $rootScope.$broadcast('articleTypesLoaded');
+            },
+            function error(errorResponse) {
+                console.log("Error: " + JSON.stringify(errorResponse));
+            });
+    });
 }]);
 godataAppArticleServices.service('ArticleGroups', ['$rootScope', 'ArticleGroup', function ($rootScope, ArticleGroup) {
     /*
      * Article groups for a HTML Select and display name with id
      */
-    ArticleGroup.query(
-        function success(response) {
-            //console.log('response: ' + response);
-            $rootScope.articleGroups = response;
-            $rootScope.articleGroups.push({"id": "0", "name": "-- none --"}); // support reset select :)
-        },
-        function error(errorResponse) {
-            console.log("Error: " + JSON.stringify(errorResponse));
-        });
+    $rootScope.$on('articleLoaded', function () {
+        ArticleGroup.query(
+            function success(response) {
+                //console.log('ArticleGroups: ' + JSON.stringify(response));
+                $rootScope.articleGroups = response;
+                $rootScope.articleGroups.push({"id": "0", "name": "-- none --"}); // support reset select :)
+                $rootScope.$broadcast('articleGroupsLoaded');
+            },
+            function error(errorResponse) {
+                console.log("Error: " + JSON.stringify(errorResponse));
+            });
+    });
 }]);
 godataAppArticleServices.service('ArticleClasses', ['$rootScope', 'ArticleClass', function ($rootScope, ArticleClass) {
     /*
      * Article classes for a HTML Select and display name with id
      */
-    var articleClasses = function () {
+    $rootScope.$on('articleLoaded', function () {
         ArticleClass.query(
             function success(response) {
                 //console.log('response: ' + response);
                 $rootScope.articleClasses = response;
                 $rootScope.articleClasses.push({"id": "0", "name": "-- none --"}); // support reset select :)
-//            var articleClassArr = new Array();
-//            jQuery.each(response, function (key, value) {
-////                        console.log('key: ' + key + '; value: ' + value + '; value.id: ' + value.id + '; value.name: ' + value.name);
-//                articleClassArr[value.id] = value.name;
-//            });
-//            // to display text value from article_group
-//            $rootScope.articleClassArr = articleClassArr;
+                $rootScope.$broadcast('articleClassesLoaded');
             },
             function error(errorResponse) {
                 console.log("Error: " + JSON.stringify(errorResponse));
             });
-    }
-    articleClasses();
+    });
 }]);
 /*
  * Stock
