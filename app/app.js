@@ -11,8 +11,8 @@ var godataApp = angular.module('godataApp', [
     'ngAnimate',
     'ngCookies',
     'ui.bootstrap',
-    'godataAppArticleControllers',
-    'godataAppCommonServices'
+    'godataAppCommonServices',
+    'godataAppControllers'
 ]);
 
 godataApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
