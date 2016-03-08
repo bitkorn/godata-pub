@@ -6,3 +6,4 @@ lib/
 tmp
 .DS_Store
 .idea
+nbproject
