@@ -73,13 +73,14 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
             $cookies.put('pagesize', pagesize);
         };
     }]);
-godataAppArticleControllers.controller('ArticleCtrl', ['$scope', '$routeParams', 'Article',
-    function article($scope, $routeParams, Article) { // GET id
+godataAppArticleControllers.controller('ArticleCtrl', ['$scope', '$routeParams', 'Article', '$rootScope', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses',
+    function article($scope, $routeParams, Article, $rootScope) { // GET id
         var articleId = $routeParams.id;
         Article.get({id: articleId},
             function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
                 $scope.article = response.data;
+                $rootScope.$broadcast('articleLoaded'); // some services look at this
             },
             function error(errorResponse) {
                 console.log("Error: " + JSON.stringify(errorResponse));

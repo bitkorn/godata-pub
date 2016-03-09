@@ -40,6 +40,7 @@
             <th>desc long</th>
             <th>desc tec</th>
             <th>type</th>
+            <th>group</th>
             <th></th>
         </tr>
     </thead>
@@ -50,7 +51,8 @@
             <td>{{article.descShort}}</td>
             <td>{{article.descLong}}</td>
             <td>{{article.descTec}}</td>
-            <td>{{articleTypes[article.articleType].name}}</td>
+            <td>{{articleTypesArr[article.articleType]}}</td>
+            <td>{{articleGroupsArr[article.articleGroup]}}</td>
             <td>
                 <a class="btn btn-xs btn-info" href="#!/article/{{article.id}}">View</a>
                 <a class="btn btn-xs btn-default" href="#!/articleEdit/{{article.id}}">Edit</a>
