@@ -63,7 +63,7 @@ godataAppArticleServices.service('ArticleTypes', ['$rootScope', 'ArticleType', f
                     function success(response) {
                         //console.log('ArticleTypes: ' + JSON.stringify(response));
                         $rootScope.articleTypes = response;
-                        $rootScope.articleTypes.push({"id": "0", "name": "-- none --"}); // support reset select :)
+//                        $rootScope.articleTypes.push({"id": "0", "name": "-- none --"}); // support reset select :)
                         $rootScope.articleTypesArr = new Array();
                         $.each($rootScope.articleTypes, function (index, value) {
                             $rootScope.articleTypesArr[value.id] = value.name;
@@ -84,7 +84,7 @@ godataAppArticleServices.service('ArticleGroups', ['$rootScope', 'ArticleGroup',
                     function success(response) {
                         //console.log('ArticleGroups: ' + JSON.stringify(response));
                         $rootScope.articleGroups = response;
-                        $rootScope.articleGroups.push({"id": "0", "name": "-- none --"}); // support reset select :)
+//                        $rootScope.articleGroups.push({"id": "0", "name": "-- none --"}); // support reset select :)
                         $rootScope.articleGroupsArr = new Array();
                         $.each($rootScope.articleGroups, function (index, value) {
                             $rootScope.articleGroupsArr[value.id] = value.name;
@@ -124,4 +124,23 @@ godataAppArticleServices.factory('StockIn', ['$resource', 'restDomain', function
             update: {method: 'PUT', cache: false, isArray: false},
             delete: {method: 'DELETE', cache: false, isArray: false}
         });
+    }]);
+/*
+ * Common
+ */
+godataAppArticleServices.factory('EmptyDefaultObjects', ['$rootScope', function ($rootScope) {
+        var emptyDefaultArticleNew = {
+            'articleNo': 0,
+            'articleType': 1,
+            'articleGroup': 1,
+            'descShort': "short description :)" // in production it must be empty
+        };
+        var data = {
+            'emptyDefaultArticleNew': emptyDefaultArticleNew
+        };
+        return {
+            getData: function () {
+                return data;
+            }
+        };
     }]);

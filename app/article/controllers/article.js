@@ -14,25 +14,25 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
 //                console.log('no it is not');
             }
             Article.query({
-                    size: $scope.itemsPerPage,
-                    page: $scope.currentPage,
-                    articleNo: $scope.article_no,
-                    desc: $scope.desc_string,
-                    articleType: articleTypeId
-                },
-                function success(response) {
-                    //console.log("Success: " + JSON.stringify(response));
-                    $scope.articles = response.data;
-                    /* Pagination */
-                    $scope.totalItems = parseInt(response.count);
-                    $scope.itemsPerPage = parseInt(response.size);
-                    $scope.currentPage = parseInt(response.page);
+                size: $scope.itemsPerPage,
+                page: $scope.currentPage,
+                articleNo: $scope.article_no,
+                desc: $scope.desc_string,
+                articleType: articleTypeId
+            },
+                    function success(response) {
+                        //console.log("Success: " + JSON.stringify(response));
+                        $scope.articles = response.data;
+                        /* Pagination */
+                        $scope.totalItems = parseInt(response.count);
+                        $scope.itemsPerPage = parseInt(response.size);
+                        $scope.currentPage = parseInt(response.page);
 //                    $rootScope.alerts = [{type: 'success', msg: 'jou toll'}];
-                    $rootScope.$broadcast('articleLoaded'); // some services look at this
-                },
-                function error(errorResponse) {
-                    console.log("Error: " + JSON.stringify(errorResponse));
-                });
+                        $rootScope.$broadcast('articleLoaded'); // some services look at this
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    });
         };
         executeQuery(); // always call for no empty site
 
@@ -57,15 +57,15 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
         $scope.articleDelete = function (id) { // DELETE id
             if (confirm('You will delete article ' + id)) {
                 Article.delete({id: id},
-                    function success(response) {
-                        //console.log("Success delete: " + JSON.stringify(response));
-                        if (response['result'] === 1) {
-                            executeQuery();
-                        }
-                    },
-                    function error(errorResponse) {
-                        console.log("Error: " + JSON.stringify(errorResponse));
-                    });
+                        function success(response) {
+                            //console.log("Success delete: " + JSON.stringify(response));
+                            if (response['result'] === 1) {
+                                executeQuery();
+                            }
+                        },
+                        function error(errorResponse) {
+                            console.log("Error: " + JSON.stringify(errorResponse));
+                        });
             }
         };
 
@@ -77,65 +77,87 @@ godataAppArticleControllers.controller('ArticleCtrl', ['$scope', '$routeParams',
     function article($scope, $routeParams, Article, $rootScope) { // GET id
         var articleId = $routeParams.id;
         Article.get({id: articleId},
-            function success(response) {
+                function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
-                $scope.article = response.data;
-                $rootScope.$broadcast('articleLoaded'); // some services look at this
-            },
-            function error(errorResponse) {
-                console.log("Error: " + JSON.stringify(errorResponse));
-            });
+                    $scope.article = response.data;
+                    $rootScope.$broadcast('articleLoaded'); // some services look at this
+                },
+                function error(errorResponse) {
+                    console.log("Error: " + JSON.stringify(errorResponse));
+                });
     }]);
-godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location', 'Article', '$rootScope', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses',
-    function ($scope, $location, Article, $rootScope) { // SAVE id
+godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location', 'Article', '$rootScope', 'EmptyDefaultObjects', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses',
+    function ($scope, $location, Article, $rootScope, EmptyDefaultObjects) { // SAVE id
         // at first init an empty article, otherwise $scope.article is empty
-        Article.get({id: 0},
-            function success(response) {
-//                    console.log("Success: " + JSON.stringify(response));
-                $scope.article = response.data;
-                $rootScope.$broadcast('articleLoaded'); // some services look at this
-            },
-            function error(errorResponse) {
-                console.log("Error: " + JSON.stringify(errorResponse));
-            });
+
+        $scope.article = EmptyDefaultObjects.getData().emptyDefaultArticleNew;
+        $rootScope.$broadcast('articleLoaded'); // some services look at this
+
+        $rootScope.$on('articleTypesLoaded', function () {
+            $scope.article.articleType = {
+                "id": 1,
+                "name": $rootScope.articleTypes[1]
+            };
+        });
+
+        $rootScope.$on('articleGroupsLoaded', function () {
+            $scope.article.articleGroup = {
+                "id": 1,
+                "name": $rootScope.articleGroups[1]
+            };
+        });
+
         $scope.articleAdd = function () {
-            if ($scope.article.articleNo === '0') {
+            if ($scope.article.articleNo.length === 0 || $scope.article.articleNo === '0') {
                 alert('You must enter a valid article no');
             } else {
-                if ($scope.article.articleType.id) {
-                    $scope.article.articleType = $scope.article.articleType.id;
+                var tmpArticle = $scope.article;
+                if (tmpArticle.articleType.id) {
+                    tmpArticle.articleType = tmpArticle.articleType.id;
                 }
-                if ($scope.article.articleGroup.id) {
-                    $scope.article.articleGroup = $scope.article.articleGroup.id;
+                if (tmpArticle.articleGroup.id) {
+                    tmpArticle.articleGroup = tmpArticle.articleGroup.id;
                 }
-                console.log("articleAdd: " + JSON.stringify($scope.article));
-                Article.create($scope.article,
-                    function success(response) {
-                        //console.log("Success add ID: " + JSON.stringify(response));
-                        $location.path('/articleEdit/' + response['id']); // comment out for testing
-//                            $rootScope.message = {type: "success", message: "created successful"};
-                    },
-                    function error(errorResponse) {
-                        console.log("Error: " + JSON.stringify(errorResponse));
-                    }
+                console.log("articleAdd: " + JSON.stringify(tmpArticle));
+                Article.create(tmpArticle,
+                        function success(response) {
+                            console.log("Success add ID: " + JSON.stringify(response));
+//                        $location.path('/articleEdit/' + response['id']); // comment out for testing
+                        },
+                        function error(errorResponse) {
+                            $scope.messages = errorResponse.data.messages;
+                            setDefaultSelects();
+                            console.log("Error: " + JSON.stringify(errorResponse));
+                        }
                 );
             }
         };
+
+        function setDefaultSelects() {
+            $scope.article.articleType = {
+                "id": $scope.article.articleType,
+                "name": $rootScope.articleTypes[$scope.article.articleType]
+            };
+            $scope.article.articleGroup = {
+                "id": $scope.article.articleGroup,
+                "name": $rootScope.articleGroups[$scope.article.articleGroup]
+            };
+        }
     }]);
 godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routeParams', 'Article', 'ArticleList', '$rootScope',
     '$uibModal', '$route', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses', 'AlertKill',
     function ($scope, $routeParams, Article, ArticleList, $rootScope, $uibModal, $route) { // UPDATE id
         var articleId = $routeParams.id;
         Article.get({id: articleId},
-            function success(response) {
-                //console.log("Success: " + JSON.stringify(response));
-                $scope.article = response.data;
-                $scope.articleListCount = response.articleListCount;
-                $rootScope.$broadcast('articleLoaded'); // some services look at this
-            },
-            function error(errorResponse) {
-                console.log("Error: " + JSON.stringify(errorResponse));
-            });
+                function success(response) {
+                    //console.log("Success: " + JSON.stringify(response));
+                    $scope.article = response.data;
+                    $scope.articleListCount = response.articleListCount;
+                    $rootScope.$broadcast('articleLoaded'); // some services look at this
+                },
+                function error(errorResponse) {
+                    console.log("Error: " + JSON.stringify(errorResponse));
+                });
 
         $scope.articleEdit = function () {
             if ($scope.article.articleType.id) {
@@ -145,15 +167,15 @@ godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routePara
                 $scope.article.articleGroup = $scope.article.articleGroup.id;
             }
             Article.update({id: $scope.article.id}, $scope.article,
-                function success(response) {
-                    $rootScope.alerts = [{type: 'success', msg: 'saved :)'}];
-                    //console.log("Success: " + JSON.stringify(response));
-                    //$location.path('/articleEdit/' + response['id']); // comment out for testing
-                    $rootScope.$broadcast('articleLoaded'); // some services look at this
-                },
-                function error(errorResponse) {
-                    console.log("Error: " + JSON.stringify(errorResponse));
-                });
+                    function success(response) {
+                        $rootScope.alerts = [{type: 'success', msg: 'saved :)'}];
+                        //console.log("Success: " + JSON.stringify(response));
+                        //$location.path('/articleEdit/' + response['id']); // comment out for testing
+                        $rootScope.$broadcast('articleLoaded'); // some services look at this
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    });
         };
 
         $rootScope.$on('articleTypesLoaded', function () {
@@ -235,17 +257,17 @@ godataAppArticleControllers.controller('ArticleEditCtrl', ['$scope', '$routePara
                 modalInstance.result.then(function (articleListEntryEntity) {
                     console.log('articleListEntryEntity edited article: ' + JSON.stringify(articleListEntryEntity));
                     ArticleList.create(articleListEntryEntity,
-                        function success(response) {
-                            console.log("articleListEntryEntity Success: " + JSON.stringify(response));
-                            $route.reload();
-                            $rootScope.message = {
-                                type: "success",
-                                message: "create Article-Part-List-Entry-Entity successful"
-                            };
-                        },
-                        function error(errorResponse) {
-                            console.log("articleListEntryEntity Error: " + JSON.stringify(errorResponse));
-                        });
+                            function success(response) {
+                                console.log("articleListEntryEntity Success: " + JSON.stringify(response));
+                                $route.reload();
+                                $rootScope.message = {
+                                    type: "success",
+                                    message: "create Article-Part-List-Entry-Entity successful"
+                                };
+                            },
+                            function error(errorResponse) {
+                                console.log("articleListEntryEntity Error: " + JSON.stringify(errorResponse));
+                            });
                 }, function () {
 //                $log.info('Modal dismissed at: ' + new Date());
                 });
@@ -273,13 +295,13 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
         $scope.showSub = new Array();
         var executeQuery = function () {
             ArticleList.get({id: parentArticle.id}, // 
-                function success(response) {
+                    function success(response) {
 //                        console.log("Success: " + JSON.stringify(response));
-                    $scope.articleListEntries = response.data;
-                },
-                function error(errorResponse) {
-                    console.log("Error: " + JSON.stringify(errorResponse));
-                });
+                        $scope.articleListEntries = response.data;
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    });
         };
         executeQuery();
 
@@ -300,18 +322,18 @@ godataAppArticleControllers.controller('ArticleListModalInstanceCtrl', ['$scope'
              */
             if (confirm('really delete article ' + articleListEntry.articleData.articleNo + ' from list?')) {
                 ArticleList.delete({id: articleListEntry.id}, // 
-                    function success(response) {
+                        function success(response) {
 //                        console.log("Success: " + JSON.stringify(response));
-                        if (response.result === 1) {
-                            $route.reload();
+                            if (response.result === 1) {
+                                $route.reload();
 //                            $rootScope.message = {type: "success", message: "deleted Article-Part-List-Entry-Entity successfully"}; // funzt hier NICHT
-                        } else {
-                            alert('wat war das?');
-                        }
-                    },
-                    function error(errorResponse) {
-                        console.log("Error: " + JSON.stringify(errorResponse));
-                    });
+                            } else {
+                                alert('wat war das?');
+                            }
+                        },
+                        function error(errorResponse) {
+                            console.log("Error: " + JSON.stringify(errorResponse));
+                        });
             }
         };
 
@@ -326,13 +348,13 @@ godataAppArticleControllers.controller('ArticleListModalUlInstanceCtrl', ['$scop
         $scope.articleListEntries = null; // oh oh ...very important (if it isn't found, angular looks up to rootScope)
         var executeQuery = function () {
             ArticleList.get({id: $scope.parentArticleListEntry.articleId},
-                function success(response) {
+                    function success(response) {
 //                        console.log("Success: " + JSON.stringify(response));
-                    $scope.articleListEntries = response.data;
-                },
-                function error(errorResponse) {
-                    console.log("Error: " + JSON.stringify(errorResponse));
-                });
+                        $scope.articleListEntries = response.data;
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    });
         };
         executeQuery(); // always call for no empty site
     }]);
@@ -353,23 +375,23 @@ godataAppArticleControllers.controller('ArticleSelectModalInstanceCtrl', ['$scop
 //                console.log('no it is not');
             }
             Article.query({
-                    size: $scope.itemsPerPage,
-                    page: $scope.currentPage,
-                    articleNo: $scope.article_no,
-                    desc: $scope.desc_string,
-                    articleType: articleTypeId
-                },
-                function success(response) {
+                size: $scope.itemsPerPage,
+                page: $scope.currentPage,
+                articleNo: $scope.article_no,
+                desc: $scope.desc_string,
+                articleType: articleTypeId
+            },
+                    function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
-                    $scope.articles = response.data;
-                    /* Pagination */
-                    $scope.totalItems = parseInt(response.count);
-                    $scope.itemsPerPage = parseInt(response.size);
-                    $scope.currentPage = parseInt(response.page);
-                },
-                function error(errorResponse) {
-                    console.log("Error: " + JSON.stringify(errorResponse));
-                });
+                        $scope.articles = response.data;
+                        /* Pagination */
+                        $scope.totalItems = parseInt(response.count);
+                        $scope.itemsPerPage = parseInt(response.size);
+                        $scope.currentPage = parseInt(response.page);
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    });
         };
         executeQuery(); // always call for no empty site
 

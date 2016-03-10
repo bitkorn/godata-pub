@@ -78,7 +78,7 @@ godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', '
             unit: ""
         };
         $scope.stockNew = function () {
-            if ($scope.stockIn.articleNo === '0') {
+            if ($scope.stockIn.articleNo.length === 0 || $scope.stockIn.articleNo === '0') {
                 alert('You must enter a valid article no');
             } else {
                 //console.log("stockInNew: " + JSON.stringify($scope.stockIn));
