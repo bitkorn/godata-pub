@@ -1,7 +1,7 @@
 'use strict';
 
 var godataAppArticleControllers = angular.module('godataAppArticleControllers', []);
-godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', 'Article', '$rootScope', '$log', '$cookies', 'ArticleTypes', 'AlertKill',
+godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', 'Article', '$rootScope', '$log', '$cookies', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses', 'AlertKill',
     function ($scope, $location, Article, $rootScope, $log, $cookies) { // GET
         $scope.itemsPerPage = parseInt($cookies.get("pagesize"));
         var articleTypeId = 0;
