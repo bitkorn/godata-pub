@@ -1,7 +1,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th colspan="2">article details for {{article.id}}</th>
+            <th colspan="2">article details</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +28,14 @@
         <tr>
             <td>desc tec</td>
             <td>{{article.descTec}}</td>
+        </tr>
+        <tr>
+            <td>created</td>
+            <td>{{article.dateCreate * 1000 | date:'MM-dd-yyyy'}}</td>
+        </tr>
+        <tr ng-show="article.dateEdit">
+            <td>last edit</td>
+            <td>{{article.dateEdit * 1000 | date:'MM-dd-yyyy'}}</td>
         </tr>
     </tbody>
 </table>

@@ -1,4 +1,10 @@
-<h3>Edit Article {{article.id}}</h3>
+<h3>Edit Article</h3>
 <form class="form-horizontal" ng-submit="articleEdit()">
   <div ng-include="'partials/article/_form-edit.html'"></div>
 </form>
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#!/article/{{article.id}}" class="btn btn-info">view article</a>
+    </div>
+</div>

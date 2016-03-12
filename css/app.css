@@ -32,7 +32,7 @@
 /* angular-ui boostrap */
 .nav, .pagination, .carousel, .panel-title a, .cursorPointer { cursor: pointer; }
 
-a, a:active, a:visited, a:focus, a:hover {
+a, a:active, a:visited, a:focus, a:hover, a.btn-info, button.btn-info {
   text-decoration: none;
   color: #003366;
 }
