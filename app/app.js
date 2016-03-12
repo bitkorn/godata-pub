@@ -12,7 +12,9 @@ var godataApp = angular.module('godataApp', [
     'ngCookies',
     'ui.bootstrap',
     'godataAppCommonServices',
-    'godataAppControllers'
+    'godataAppControllers',
+    'godataAppIndexServices',
+    'ab-base64'
 ]);
 
 godataApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -31,3 +33,4 @@ godataApp.run(function ($rootScope, $cookies) {
         $cookies.put("pagesize", 6); // initial pagesize
     }
 });
+godataApp.constant('restDomain', 'http://godatarest.local');
