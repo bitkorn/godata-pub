@@ -29,6 +29,10 @@
   padding: 0;
 }
 
+.navbar-brand > a {
+    margin-top: -14px;
+}
+
 /* angular-ui boostrap */
 .nav, .pagination, .carousel, .panel-title a, .cursorPointer { cursor: pointer; }
 

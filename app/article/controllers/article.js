@@ -5,7 +5,7 @@ godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', '
     function ($scope, $location, Article, $rootScope, $log, $cookies) { // GET
         $scope.itemsPerPage = parseInt($cookies.get("pagesize"));
         var articleTypeId = 0;
-
+console.log('sessionID: ' + $cookies.get('sessionid'));
         var executeQuery = function () {
             if ((angular.isDefined($scope.selectedArticleType))) {
 //                console.log('jou it is');
