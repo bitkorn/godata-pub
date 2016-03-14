@@ -12,20 +12,20 @@ var godataApp = angular.module('godataApp', [
     'ngCookies',
     'ui.bootstrap',
     'godataAppCommonServices',
-    'godataAppControllers',
+    'godataAppIndexControllers',
     'godataAppIndexServices',
     'ab-base64'
 ]);
 
-godataApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.otherwise({redirectTo: '/'});
-    $routeProvider.when('/', {
-        templateUrl: 'partials/index.html',
-        controller: 'IndexCtrl'
-    });
-    $locationProvider.html5Mode(false).hashPrefix('!');
-
-}]);
+godataApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+        $routeProvider.otherwise({redirectTo: '/'});
+        $routeProvider.when('/', {
+            templateUrl: 'partials/index.html',
+            controller: 'IndexCtrl'
+        });
+        $locationProvider.html5Mode(false).hashPrefix('!');
+        $httpProvider.defaults.withCredentials = true;
+    }]);
 godataApp.run(function ($rootScope, $cookies) {
     var pagesize = parseInt($cookies.get("pagesize"));
     if (!pagesize) {

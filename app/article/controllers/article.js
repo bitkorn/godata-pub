@@ -3,9 +3,8 @@
 var godataAppArticleControllers = angular.module('godataAppArticleControllers', []);
 godataAppArticleControllers.controller('ArticlesCtrl', ['$scope', '$location', 'Article', '$rootScope', '$log', '$cookies', 'ArticleTypes', 'ArticleGroups', 'ArticleClasses', 'AlertKill',
     function ($scope, $location, Article, $rootScope, $log, $cookies) { // GET
-        $scope.itemsPerPage = parseInt($cookies.get("pagesize"));
+        $scope.itemsPerPage = parseInt($cookies.get('pagesize'));
         var articleTypeId = 0;
-console.log('sessionID: ' + $cookies.get('sessionid'));
         var executeQuery = function () {
             if ((angular.isDefined($scope.selectedArticleType))) {
 //                console.log('jou it is');

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('godataAppIndexControllers', []).controller('IndexCtrl', ['$scope', '$rootScope', 'base64', '$http', 'restDomain', 'AlertKill',
-    function ($scope, $rootScope, base64, $http, restDomain) {
+angular.module('godataAppLoginControllers', []).controller('IndexCtrl', ['$scope', '$rootScope', 'base64', '$http', 'restDomain', '$cookies', 'AlertKill',
+    function ($scope, $rootScope, base64, $http, restDomain, $cookies) {
 //        $rootScope.alerts = [{type: 'success', msg: 'jou toll'}];
         $scope.welcomeMessage = 'hello employee';
 
@@ -14,7 +14,8 @@ angular.module('godataAppIndexControllers', []).controller('IndexCtrl', ['$scope
                         console.log('---');
                         console.log(JSON.stringify(result));
                         if (result.data.result === 1) {
-//                            $cookies.put('sessionid', result.data.data);
+                            $cookies.put('sessionid', result.data.data);
+                            console.log('set cookie');
                         }
                         console.log('---');
                     })
