@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('godataAppIndexControllers', []).controller('IndexCtrl', ['$scope', '$rootScope', 'base64', '$http', 'restDomain', 'AlertKill',
+var godataAppIndexControllers = angular.module('godataAppIndexControllers', []);
+
+godataAppIndexControllers.controller('IndexCtrl', ['$scope', '$rootScope', 'base64', '$http', 'restDomain', 'AlertKill',
     function ($scope, $rootScope, base64, $http, restDomain) {
 //        $rootScope.alerts = [{type: 'success', msg: 'jou toll'}];
         $scope.welcomeMessage = 'hello employee';
@@ -22,4 +24,16 @@ angular.module('godataAppIndexControllers', []).controller('IndexCtrl', ['$scope
                         console.log(JSON.stringify(result));
                     });
         };
+    }]);
+godataAppIndexControllers.controller('TestLoginCtrl', ['$scope', '$rootScope', '$http', 'restDomain', 'AlertKill',
+    function ($scope, $rootScope, $http, restDomain) {
+//        $rootScope.alerts = [{type: 'success', msg: 'jou toll'}];
+
+        $http.get(restDomain + '/testlogin/5', null, {})
+                .then(function (result) {
+                    console.log('testlogin: ' + JSON.stringify(result));
+                })
+                .catch(function (result) {
+                    console.log(JSON.stringify(result));
+                });
     }]);
