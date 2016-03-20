@@ -30,7 +30,7 @@ godataAppArticleServices.factory('ArticleList', ['$resource', 'restDomain', func
 godataAppArticleServices.factory('ArticleType', ['$resource', 'restDomain', function ($resource, restDomain) {
         return $resource(restDomain + '/article-type', {}, {
             //get: {method: 'GET', cache: false, isArray: false},
-            query: {method: 'GET', cache: false, isArray: true},
+            query: {method: 'GET', cache: false, isArray: true}
             //create: {method: 'POST', cache: false, isArray: false},
             //update: {method: 'PUT', cache: false, isArray: false},
             //delete: {method: 'DELETE', cache: false, isArray: false}
@@ -39,7 +39,7 @@ godataAppArticleServices.factory('ArticleType', ['$resource', 'restDomain', func
 godataAppArticleServices.factory('ArticleGroup', ['$resource', 'restDomain', function ($resource, restDomain) {
         return $resource(restDomain + '/article-group', {}, {
             //get: {method: 'GET', cache: false, isArray: false},
-            query: {method: 'GET', cache: false, isArray: true},
+            query: {method: 'GET', cache: false, isArray: true}
             //create: {method: 'POST', cache: false, isArray: false},
             //update: {method: 'PUT', cache: false, isArray: false},
             //delete: {method: 'DELETE', cache: false, isArray: false}
@@ -48,7 +48,7 @@ godataAppArticleServices.factory('ArticleGroup', ['$resource', 'restDomain', fun
 godataAppArticleServices.factory('ArticleClass', ['$resource', 'restDomain', function ($resource, restDomain) {
         return $resource(restDomain + '/article-class', {}, {
             //get: {method: 'GET', cache: false, isArray: false},
-            query: {method: 'GET', cache: false, isArray: true},
+            query: {method: 'GET', cache: false, isArray: true}
             //create: {method: 'POST', cache: false, isArray: false},
             //update: {method: 'PUT', cache: false, isArray: false},
             //delete: {method: 'DELETE', cache: false, isArray: false}

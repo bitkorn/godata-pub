@@ -55,7 +55,9 @@ godataAppArticle.run(function ($rootScope, $cookies, $http, base64) {
 //        alert("change");
         $cookies.put("pagesize", 6); // initial pagesize
     }
-    var credentialString = base64.encode('allapow' + ':' + 'testtext');
-    $http.defaults.headers.common['Authorization'] = 'Basic ' + credentialString;
+    if($cookies.get('auth')) {
+//        var credentialString = base64.encode('allapow' + ':' + 'testtext');
+        $http.defaults.headers.common['Authorization'] = $cookies.get('auth');
+    }
 });
 godataAppArticle.constant('restDomain', 'http://godatarest.local');

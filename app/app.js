@@ -26,11 +26,15 @@ godataApp.config(['$routeProvider', '$locationProvider', '$httpProvider', functi
         $locationProvider.html5Mode(false).hashPrefix('!');
 //        $httpProvider.defaults.withCredentials = true;
     }]);
-godataApp.run(function ($rootScope, $cookies) {
+godataApp.run(function ($rootScope, $cookies, $http, base64) {
     var pagesize = parseInt($cookies.get("pagesize"));
     if (!pagesize) {
 //        alert("change");
         $cookies.put("pagesize", 6); // initial pagesize
+    }
+    if($cookies.get('auth')) {
+//        var credentialString = base64.encode('allapow' + ':' + 'testtext');
+        $http.defaults.headers.common['Authorization'] = $cookies.get('auth');
     }
 });
 godataApp.constant('restDomain', 'http://godatarest.local');

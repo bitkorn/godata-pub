@@ -121,7 +121,7 @@ godataAppArticleControllers.controller('ArticleNewCtrl', ['$scope', '$location',
                 Article.create(tmpArticle,
                         function success(response) {
                             console.log("Success add ID: " + JSON.stringify(response));
-//                        $location.path('/articleEdit/' + response['id']); // comment out for testing
+                            $location.path('/articleEdit/' + response['id']); // comment out for testing
                         },
                         function error(errorResponse) {
                             $scope.messages = errorResponse.data.messages;
