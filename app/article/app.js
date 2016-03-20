@@ -14,7 +14,8 @@ var godataAppArticle = angular.module('godataAppArticle', [
     'godataAppCommonServices',
     'godataAppArticleControllers',
     'godataAppStockControllers',
-    'godataAppArticleServices'
+    'godataAppArticleServices',
+    'ab-base64'
 ]);
 
 godataAppArticle.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
@@ -45,14 +46,16 @@ godataAppArticle.config(['$routeProvider', '$locationProvider', '$httpProvider',
             controller: 'StockInEditCtrl'
         });
         $locationProvider.html5Mode(false).hashPrefix('!');
-        $httpProvider.defaults.withCredentials = true;
+//        $httpProvider.defaults.withCredentials = true;
     }]);
 
-godataAppArticle.run(function ($rootScope, $cookies, $http) {
+godataAppArticle.run(function ($rootScope, $cookies, $http, base64) {
     var pagesize = parseInt($cookies.get("pagesize"));
     if (!pagesize) {
 //        alert("change");
         $cookies.put("pagesize", 6); // initial pagesize
     }
+    var credentialString = base64.encode('allapow' + ':' + 'testtext');
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + credentialString;
 });
 godataAppArticle.constant('restDomain', 'http://godatarest.local');

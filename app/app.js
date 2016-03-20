@@ -22,12 +22,9 @@ godataApp.config(['$routeProvider', '$locationProvider', '$httpProvider', functi
         $routeProvider.when('/', {
             templateUrl: 'partials/index.html',
             controller: 'IndexCtrl'
-        }).when('/testlogin', {
-            templateUrl: 'partials/textlogin.html',
-            controller: 'TestLoginCtrl'
         });
         $locationProvider.html5Mode(false).hashPrefix('!');
-        $httpProvider.defaults.withCredentials = true;
+//        $httpProvider.defaults.withCredentials = true;
     }]);
 godataApp.run(function ($rootScope, $cookies) {
     var pagesize = parseInt($cookies.get("pagesize"));
