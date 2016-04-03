@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">view article list {{parentArticle.articleNo}} (id: {{parentArticle.id}})</h3>
+    <h3 class="modal-title">view article list (no: {{parentArticle.articleNo}}; id: {{parentArticle.id}})</h3>
 </div>
 <div class="modal-body">
     <!--{{articleListEntries}}-->
@@ -29,7 +29,13 @@
                 <div class="col-sm-2">
                     <span class="badge">{{articleListEntry.countSubArticles}}</span>
                     <button class="btn btn-xs btn-info ng-hide" ng-click="openSubArticleListEntries(articleListEntry)"
-                            ng-show="articleListEntry.countSubArticles !== '0'">view list
+                            ng-show="articleListEntry.countSubArticles !== '0'">
+                        <div ng-if="showSub[articleListEntry.id]['show']">
+                            hide list
+                        </div>
+                        <div ng-if="!showSub[articleListEntry.id]['show']">
+                            show list
+                        </div>
                     </button>
                 </div>
                 <div class="col-sm-1">
