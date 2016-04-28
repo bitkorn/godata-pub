@@ -41,6 +41,7 @@
             <th>Store Place</th>
             <th>Charge</th>
             <th>Quantity</th>
+            <th>booking time</th>
             <th></th>
         </tr>
     </thead>
@@ -52,6 +53,7 @@
             <td>{{stockIn.storePlace}}</td>
             <td>{{stockIn.charge}}</td>
             <td>{{stockIn.quantity}}</td>
+            <td>{{formatUnixtime(stockIn.entryTime)}}</td>
             <td>
                 <a class="btn btn-xs btn-info" href="#!/article/{{stockIn.articleId}}">view article</a>
                 <a class="btn btn-xs btn-info" href="#!/stockIn/{{stockIn.id}}">view stock-in</a>

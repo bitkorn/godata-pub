@@ -12,24 +12,24 @@ godataAppStockControllers.controller('StockInsCtrl', ['$scope', '$location', 'St
 //            var day = $scope.entry_time_from.getDate();
 //            alert(day);
             StockIn.query({
-                    size: $scope.itemsPerPage,
-                    page: $scope.currentPage,
-                    articleNo: $scope.article_no,
-                    entryTimeFrom: $scope.entry_time_from,
-                    entryTimeTo: $scope.entry_time_to
-                },
-                function success(response) {
+                size: $scope.itemsPerPage,
+                page: $scope.currentPage,
+                articleNo: $scope.article_no,
+                entryTimeFrom: $scope.entry_time_from,
+                entryTimeTo: $scope.entry_time_to
+            },
+                    function success(response) {
 //                    console.log("Success: " + JSON.stringify(response));
-                    $scope.stockIns = response.data;
-                    /* Pagination */
-                    $scope.totalItems = parseInt(response.count);
-                    $scope.itemsPerPage = parseInt(response.size);
-                    $scope.currentPage = parseInt(response.page);
+                        $scope.stockIns = response.data;
+                        /* Pagination */
+                        $scope.totalItems = parseInt(response.count);
+                        $scope.itemsPerPage = parseInt(response.size);
+                        $scope.currentPage = parseInt(response.page);
 //                    $rootScope.alerts = [{type: 'success', msg: 'jou toll'}];
-                },
-                function error(errorResponse) {
-                    console.log("Error: " + JSON.stringify(errorResponse));
-                });
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                    });
         };
         executeQuery(); // always call for no empty site
 
@@ -65,6 +65,10 @@ godataAppStockControllers.controller('StockInsCtrl', ['$scope', '$location', 'St
         $scope.setPagesize = function (pagesize) {
             $cookies.put('pagesize', pagesize);
         };
+        
+        $scope.formatUnixtime = function(unixtime) {
+            return moment.unix(unixtime).format("DD.MM.YYYY HH:mm:ss");
+        };
     }]);
 godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', 'StockIn', '$rootScope', '$log', '$uibModal', 'AlertKill',
     function ($scope, $location, StockIn, $rootScope, $log, $uibModal) { // POST
@@ -83,16 +87,16 @@ godataAppStockControllers.controller('StockInNewCtrl', ['$scope', '$location', '
             } else {
                 //console.log("stockInNew: " + JSON.stringify($scope.stockIn));
                 StockIn.create($scope.stockIn,
-                    function success(response) {
-                        //console.log("Success: " + JSON.stringify(response));
-                        //$location.path('/stockInEdit/' + response['id']); // comment out for testing
-                        $rootScope.alerts = [{type: "success", msg: "create successful"}];
-                    },
-                    function error(errorResponse) {
-                        $scope.messages = errorResponse.data.messages;
-                        $rootScope.alerts = [{type: "danger", msg: "create failure"}];
-                        //console.log("Error: " + JSON.stringify(errorResponse));
-                    }
+                        function success(response) {
+                            //console.log("Success: " + JSON.stringify(response));
+                            //$location.path('/stockInEdit/' + response['id']); // comment out for testing
+                            $rootScope.alerts = [{type: "success", msg: "create successful"}];
+                        },
+                        function error(errorResponse) {
+                            $scope.messages = errorResponse.data.messages;
+                            $rootScope.alerts = [{type: "danger", msg: "create failure"}];
+                            //console.log("Error: " + JSON.stringify(errorResponse));
+                        }
                 );
             }
         };
@@ -123,14 +127,15 @@ godataAppStockControllers.controller('StockInCtrl', ['$scope', '$routeParams', '
         /* show one stock-in entry  */
         // TODO: REST API -> join article
         var stockInId = $routeParams.id;
-        StockIn.query({id:stockInId},
-            function success(response) {
-                $scope.stockIn = response.data;
-                console.log("Success: " + JSON.stringify(response));
-            },
-            function error(errorResponse) {
-                console.log("Error: " + JSON.stringify(errorResponse));
-            }
+        StockIn.query({id: stockInId},
+                function success(response) {
+                    $scope.stockIn = response.data;
+                    $scope.stockIn.entryTimeFormated = moment.unix(response.data.entryTime).format("DD.MM.YYYY HH:mm:ss");
+                    console.log("Success: " + JSON.stringify(response));
+                },
+                function error(errorResponse) {
+                    console.log("Error: " + JSON.stringify(errorResponse));
+                }
         );
 
     }]);
@@ -140,26 +145,26 @@ godataAppStockControllers.controller('StockInEditCtrl', ['$scope', '$routeParams
         /* rule: unable to edit articleNo from one stock-in entry  */
         // TODO: REST API -> join article
         var stockInId = $routeParams.id;
-        StockIn.query({id:stockInId},
-            function success(response) {
-                $scope.stockIn = response.data;
-                console.log("Success: " + JSON.stringify(response));
-            },
-            function error(errorResponse) {
-                console.log("Error: " + JSON.stringify(errorResponse));
-            }
-        );
-        $scope.stockEdit = function () {
-            console.log("stockEdit: " + JSON.stringify($scope.stockIn));
-            StockIn.update({id:$scope.stockIn.id}, $scope.stockIn,
+        StockIn.query({id: stockInId},
                 function success(response) {
+                    $scope.stockIn = response.data;
                     console.log("Success: " + JSON.stringify(response));
-                    $rootScope.alerts = [{type: "success", msg: "edited successful"}];
                 },
                 function error(errorResponse) {
                     console.log("Error: " + JSON.stringify(errorResponse));
-                    $rootScope.alerts = [{type: "warning", msg: "there are some errors during editing stock-in"}];
                 }
+        );
+        $scope.stockEdit = function () {
+            console.log("stockEdit: " + JSON.stringify($scope.stockIn));
+            StockIn.update({id: $scope.stockIn.id}, $scope.stockIn,
+                    function success(response) {
+                        console.log("Success: " + JSON.stringify(response));
+                        $rootScope.alerts = [{type: "success", msg: "edited successful"}];
+                    },
+                    function error(errorResponse) {
+                        console.log("Error: " + JSON.stringify(errorResponse));
+                        $rootScope.alerts = [{type: "warning", msg: "there are some errors during editing stock-in"}];
+                    }
             );
         };
     }]);

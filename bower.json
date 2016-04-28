@@ -17,7 +17,9 @@
     "bootstrap": "~3.3.6",
     "angular-ui-router": "^0.2.18",
     "angular-bootstrap": "^1.1.2",
-    "angular-utf8-base64": "^0.0.5"
+    "angular-utf8-base64": "^0.0.5",
+    "moment": "^2.13.0",
+    "angular-momentjs": "^0.2.2"
   },
   "resolutions": {
     "jquery": "1.9.1 - 2"
