@@ -1,30 +1,41 @@
-<div class="row">
+<div class="row" ng-if="access">
     <div class="col-xs-4 col-xs-offset-2">
         <h4>{{welcomeMessage}}</h4>
     </div>
 </div>
-<form ng-submit="godataLogin()">
+<div ng-hide="access">
+    <form ng-submit="godataLogin()"><!--  ng-if="!access" -->
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-2">
+                <div class="form-group">
+                    <label for="username">username</label>
+                    <input type="text" ng-model="username" id="username" class="form-control" placeholder="username here"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-2">
+                <div class="form-group">
+                    <label for="passwd">password</label>
+                    <input type="password" ng-model="passwd" id="passwd" class="form-control" placeholder="password here"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-2">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="login"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div ng-hide="!access">
     <div class="row">
         <div class="col-xs-4 col-xs-offset-2">
             <div class="form-group">
-                <label for="username">username</label>
-                <input type="text" ng-model="username" id="username" class="form-control" placeholder="username here"/>
+                <button class="btn btn-success" ng-click="godataLogout()">logout</button>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-4 col-xs-offset-2">
-            <div class="form-group">
-                <label for="passwd">password</label>
-                <input type="password" ng-model="passwd" id="passwd" class="form-control" placeholder="password here"/>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4 col-xs-offset-2">
-            <div class="form-group">
-                <input type="submit" class="btn btn-success" value="login"/>
-            </div>
-        </div>
-    </div>
-</form>
+</div>
