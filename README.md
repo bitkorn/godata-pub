@@ -8,3 +8,6 @@ The complete app is divided in different apps, so that you don't have to load al
 
 ## does not working shit
 angular-momentjs
+
+## install
+in /app/app.js & /app/article/app.js change the API URL on bottom of page

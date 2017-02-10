@@ -42,3 +42,4 @@ godataApp.run(function ($rootScope, $cookies, $http, base64) {
     }
 });
 godataApp.constant('restDomain', 'http://godatarest.local');
+//godataApp.constant('restDomain', 'https://erpapi.bitkorn.de');
